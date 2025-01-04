@@ -42,8 +42,8 @@ This project was created by [NineLEL](https://github.com/NineLEL). You can call 
 ## Credits
 
 - [Astro](https://astro.build/) - The framework used for the website.
+- [Vue](https://vuejs.org/) - The framework used for the website.
 - [TailwindCSS](https://tailwindcss.com/) - The CSS framework used for the website.
-- [Vue](https://vuejs.org/) - The JavaScript framework used for the website.
 - [DaisyUI](https://daisyui.com/) - The UI library used for the website.
 - [AstroIcon](https://www.astroicon.dev/) - The icon library used for the website.
 - [Fontsource Open Sauce Two](https://fontsource.org/fonts/open-sauce-two) - The font used for the website.
