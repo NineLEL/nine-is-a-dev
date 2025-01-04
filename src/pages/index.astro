@@ -5,6 +5,25 @@ import About from "../layouts/About.astro";
 // import Footer from "../layouts/Footer.astro";
 ---
 
+<head>
+  <!-- Standard meta tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Nine" />
+  <meta property="og:description" content="My personal website and portfolio" />
+  <!-- <meta
+    property="og:image"
+    content="https://yourwebsite.com/path/to/image.jpg"
+  /> -->
+  <meta property="og:url" content="https://nine.is-a.dev" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nine" />
+
+  <title>Nine</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
 <NavBar />
 <section class="mx-auto hero min-h-screen" id="home">
   <div class="hero-content flex-col lg:flex-row items-center">
