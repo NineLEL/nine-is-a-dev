@@ -1,11 +1,89 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import NavBar from "../components/NavBar.astro";
+import Game from "../components/Game.vue";
+import About from "../layouts/About.astro";
+// import Footer from "../layouts/Footer.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<NavBar />
+<section class="mx-auto hero min-h-screen" id="home">
+  <div class="hero-content flex-col lg:flex-row items-center">
+    <div class="text-center lg:text-left">
+      <h1 class="text-6xl font-bold">
+        Hello I'm <span class="text-primary">Nine</span>
+      </h1>
+      <h2 class="text-3xl font-bold">
+        I'm a <span id="typewriter" class="text-primary font-bold"></span>
+      </h2>
+    </div>
+    <Game client:only class="w-96 h-96 lg:text-right lg:ml-8" />
+  </div>
+</section>
+
+<!-- Scroll Down Icon -->
+<div class="scroll-down absolute bottom-4 left-1/2 transform -translate-x-1/2">
+  <a href="#about" id="scrollLink">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 13l-7 7-7-7m14-8l-7 7-7-7"></path>
+    </svg>
+  </a>
+</div>
+
+<section class="hero min-h-screen bg-base-200" id="about">
+  <About />
+</section>
+
+<script is:inline type="module">
+  import { typewriterEffect } from "../src/components/Typewriter.ts";
+  const words = ["Developer", "Gamer"];
+  const elementId = "typewriter";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    typewriterEffect(elementId, words, 200, 100);
+  });
+
+  // Scroll behavior for the smooth scroll on click
+  document.getElementById("scrollLink").addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent the default anchor link behavior
+
+    const target = document.querySelector(this.getAttribute("href"));
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  });
+</script>
+
+<style>
+  /* Bounce Animation for the Scroll Down Icon */
+  .scroll-down {
+    animation: scroll-down 2s infinite;
+  }
+
+  @keyframes scroll-down {
+    0% {
+      transform: translateY(-10px);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Enable smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
