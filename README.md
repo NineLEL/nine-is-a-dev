@@ -1,48 +1,50 @@
-# Astro Starter Kit: Basics
+# Welcome to nine-is-a-dev
 
-```sh
-npm create astro@latest -- --template basics
-```
+This is the starting point for my personal website built with Astro. You can visit it at [nine.is-a.dev](https://nine.is-a.dev). Below are some helpful links and commands.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## How to Use
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. **Install dependencies**
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+   ```sh
+   pnpm install
+   ```
 
-## 🚀 Project Structure
+2. **Start the development server**
 
-Inside of your Astro project, you'll see the following folders and files:
+   ```sh
+   pnpm run dev
+   ```
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+3. **Build for production**
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+   ```sh
+   pnpm run build
+   ```
 
-## 🧞 Commands
+## Project Structure
 
-All commands are run from the root of the project, from a terminal:
+The project is structured as follows:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. **src/** - The source code for the website.
+2. **public/** - The static assets for the website.
+3. **package.json** - The configuration file for the project.
+4. **pnpm-lock.yaml** - The lock file for the project.
 
-## 👀 Want to learn more?
+## License
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project is licensed under the [MIT License](https://github.com/NineLEL/nine-is-a-dev/blob/master/LICENSE).
+
+## Author
+
+This project was created by [NineLEL](https://github.com/NineLEL). You can call me Nine.
+
+## Credits
+
+- [Astro](https://astro.build/) - The framework used for the website.
+- [TailwindCSS](https://tailwindcss.com/) - The CSS framework used for the website.
+- [Vue](https://vuejs.org/) - The JavaScript framework used for the website.
+- [DaisyUI](https://daisyui.com/) - The UI library used for the website.
+- [AstroIcon](https://www.astroicon.dev/) - The icon library used for the website.
+- [Fontsource Open Sauce Two](https://fontsource.org/fonts/open-sauce-two) - The font used for the website.
+- [Undraw](https://undraw.co/) - The illustrations used for the website.
