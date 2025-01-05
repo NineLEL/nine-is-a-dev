@@ -37,7 +37,7 @@ import About from "../layouts/About.astro";
     <div class="hero-content flex-col lg:flex-row items-center">
       <div class="text-center lg:text-left">
         <h1 class="text-6xl font-bold">
-          Hello I'm <span class="text-primary">Nine</span>
+          Hello I'm <span class="text-primary whitespace-nowrap">Nine</span>
         </h1>
         <h2 class="text-3xl font-bold">
           I'm a <span id="typewriter" class="text-primary font-bold"></span>
@@ -161,6 +161,23 @@ import About from "../layouts/About.astro";
   </script>
 
   <style>
+    @media screen and (max-width: 470px) {
+      h1 {
+        font-size: 3rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media screen and (max-width: 375px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
     /* Bounce Animation for the Scroll Down Icon */
     .scroll-down {
       animation: scroll-down 2s infinite;
