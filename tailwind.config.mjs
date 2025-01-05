@@ -15,7 +15,7 @@ export const daisyui = {
     {
       dark: {
         ...require("daisyui/src/theming/themes")["dark"],
-        primary: "#3091FF",
+        primary: "#0055B8",
       },
       light: {
         ...require("daisyui/src/theming/themes")["light"],

@@ -26,7 +26,7 @@
       </label>
       <!-- Dropdown Menu -->
       <ul
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow peer-checked:block hidden"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow peer-checked:block hidden" aria-labelledby="menu-toggle"
       >
         <li class="text-xl font-semibold"><a href="#about">About</a></li>
       </ul>
@@ -46,12 +46,13 @@
   <!-- Navbar End -->
   <div class="navbar-end flex items-center">
     <!-- Theme Changer -->
-    <label for="theme-switcher" class="swap swap-rotate mr-4">
+    <label for="theme-switcher" class="swap swap-rotate mr-4" aria-label="Toggle theme">
       <input
         type="checkbox"
         id="theme-switcher"
         class="theme-controller"
         value="light"
+        aria-label="Toggle theme"
       />
 
       <!-- Moon Icon -->
