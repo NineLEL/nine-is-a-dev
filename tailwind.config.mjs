@@ -6,6 +6,12 @@ export default {
   },
   darkMode: "class",
   plugins: [require("daisyui")],
+  theme: {
+    colors: {
+      "about-section": "#191E24",
+      "about-text": "#E0E0E0 ",
+    },
+  },
 };
 
 // daisyUI config (optional)
@@ -15,7 +21,7 @@ export const daisyui = {
     {
       dark: {
         ...require("daisyui/src/theming/themes")["dark"],
-        primary: "#0055B8",
+        primary: "#A1C6EA",
       },
       light: {
         ...require("daisyui/src/theming/themes")["light"],
