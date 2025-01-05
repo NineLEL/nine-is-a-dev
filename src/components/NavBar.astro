@@ -25,12 +25,19 @@
             d="M4 6h16M4 12h8m-8 6h16"></path>
         </svg>
       </label> -->
+      <script>
+        window.toggleMenu = function () {
+          const menu = document.getElementById("dropdown-menu") as HTMLElement;
+          menu.classList.toggle("hidden");
+        };
+      </script>
+
       <!-- Hamburger Button with Toggle -->
-      <input type="checkbox" id="menu-toggle" class="peer hidden" />
       <div
         tabindex="0"
         class="btn btn-ghost lg:hidden"
         aria-label="Toggle menu"
+        onclick="toggleMenu()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,15 +56,17 @@
 
       <!-- Dropdown Menu with ARIA controls -->
       <ul
-        class="menu menu-lg dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+        class="menu menu-lg dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow hidden"
         aria-label="Main menu"
         role="menu"
+        id="dropdown-menu"
         aria-hidden="true"
       >
         <li class="text-xl font-semibold"><a href="#about">About</a></li>
         <!-- More menu items can go here -->
       </ul>
     </div>
+
     <a href="#home" class="btn btn-ghost normal-case font-extrabold text-3xl"
       >Nine</a
     >
@@ -108,7 +117,9 @@
         ></path>
       </svg>
     </label>
-    <a href="#home" class="btn btn-outline btn-primary text-xl">Contacts</a>
+    <div>
+      <a href="#home" class="btn btn-outline btn-primary text-xl">Contacts</a>
+    </div>
   </div>
 </div>
 
