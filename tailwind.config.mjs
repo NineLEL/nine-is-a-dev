@@ -9,7 +9,6 @@ export default {
   theme: {
     colors: {
       "about-section": "#191E24",
-      "about-text": "#E0E0E0 ",
     },
   },
 };
@@ -22,10 +21,12 @@ export const daisyui = {
       dark: {
         ...require("daisyui/src/theming/themes")["dark"],
         primary: "#A1C6EA",
+        "about-text": "#E0E0E0 ",
       },
       light: {
         ...require("daisyui/src/theming/themes")["light"],
         primary: "#004DA5",
+        "about-text": "#E0E0E0 ",
       },
     },
     "light",
