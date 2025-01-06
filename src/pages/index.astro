@@ -1,7 +1,8 @@
 ---
 import NavBar from "../components/NavBar.astro";
 import Game from "../components/Game.vue";
-import About from "../layouts/About.astro";
+import About from "../sections/About.astro";
+import Projects from "../sections/Projects.astro";
 // import Footer from "../layouts/Footer.astro";
 ---
 
@@ -29,7 +30,7 @@ import About from "../layouts/About.astro";
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Nine's Personal Site" />
 
-    <title>Nine</title>
+    <title>Nine | Personal Website</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <NavBar />
@@ -69,8 +70,11 @@ import About from "../layouts/About.astro";
     </svg>
   </a>
 
-  <section class="hero min-h-screen bg-base-200" id="about">
+  <section id="about">
     <About />
+  </section>
+  <section id="projects">
+    <Projects />
   </section>
 
   <script is:inline type="module">

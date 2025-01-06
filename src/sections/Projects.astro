@@ -1,0 +1,118 @@
+---
+const projects = [
+  {
+    title: "nine-is-a-dev",
+    description:
+      "A personal website built with Astro, Vue, TailwindCSS and DaisyUI.",
+    githubLink: "https://github.com/NineLEL/nine-is-a-dev",
+    actionLink: "https://nine.is-a.dev",
+  },
+  {
+    title: "Saiko's Pet",
+    description: "A Discord bot with random features and image manipulation.",
+    githubLink: "", // The bot is not open source
+    actionLink:
+      "https://discord.com/oauth2/authorize?client_id=927108202867359745&permissions=1738314997956433&integration_type=0&scope=bot",
+  },
+  {
+    title: "card-nine-is-a-dev",
+    description: "A personal card, still in development.",
+    githubLink: "", // In development
+    actionLink: "",
+  },
+];
+---
+
+<div class="min-h-screen flex items-center justify-center">
+  <div class="container px-4">
+    <div class="title-container mb-8">
+      <h1
+        class="text-5xl font-extrabold lg:text-7xl leading-tight text-primary"
+      >
+        Projects
+      </h1>
+    </div>
+    <div class="project-container-wrapper overflow-x-auto">
+      <div class="project-container flex space-x-3 mt-8">
+        {
+          projects.map((project) => (
+            <div class="card bg-base-200 w-96 shadow-md">
+              <div class="card-body">
+                <h2 class="card-title text-2xl font-bold">{project.title}</h2>
+                <p>{project.description}</p>
+                <div class="card-actions justify-end">
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      class="btn btn-base bg-base-100 flex items-center"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 mr-2"
+                        viewBox="0 0 98 96"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                      GitHub
+                    </a>
+                  )}
+                  {project.actionLink && (
+                    <a
+                      href={project.actionLink}
+                      target="_blank"
+                      class="btn btn-base bg-base-100 flex items-center"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        class="w-5 h-5 mr-2"
+                        viewBox="0 0 512.000000 512.000000"
+                      >
+                        <g
+                          transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                          fill="currentColor"
+                          stroke="none"
+                        >
+                          <path d="M3200 4320 l0 -160 366 -2 366 -3 -1066 -1049 c-586 -577 -1066 -1052 -1066 -1055 0 -8 243 -251 251 -251 3 0 478 480 1055 1066 l1049 1066 3 -366 2 -366 160 0 160 0 0 640 0 640 -640 0 -640 0 0 -160z" />
+                          <path d="M822 4145 c-188 -41 -361 -183 -444 -364 -61 -132 -59 -73 -56 -1574 l3 -1372 27 -73 c38 -105 83 -176 158 -252 76 -75 147 -120 252 -158 l73 -27 1400 0 1400 0 70 22 c98 31 189 87 265 163 75 76 120 148 158 252 l27 73 3 863 3 862 -160 0 -160 0 -3 -847 -3 -848 -28 -57 c-32 -64 -80 -111 -146 -142 l-46 -21 -1375 0 -1375 0 -46 21 c-66 31 -114 78 -146 142 l-28 57 0 1375 0 1375 28 57 c32 64 80 111 146 142 45 21 56 21 894 24 l847 3 0 159 0 160 -837 -1 c-668 0 -851 -3 -901 -14z" />
+                        </g>
+                      </svg>
+                      Visit
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add the following CSS styles -->
+<style>
+  .project-container-wrapper {
+    overflow-x: auto;
+  }
+
+  .project-container {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.3s ease-in-out;
+    margin: 1.5rem;
+  }
+
+  .card {
+    flex: 0 0 auto; /* Prevent the cards from shrinking */
+  }
+</style>
