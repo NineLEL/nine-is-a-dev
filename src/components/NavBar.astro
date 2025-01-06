@@ -33,9 +33,11 @@
       </script>
 
       <!-- Hamburger Button with Toggle -->
-      <button
+      <div
+        tabindex="0"
         class="btn btn-ghost lg:hidden"
         onclick="toggleMenu()"
+        role="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +52,7 @@
             stroke-width="2"
             d="M4 6h16M4 12h8m-8 6h16"></path>
         </svg>
-      </button>
+      </div>
 
       <!-- Dropdown Menu with ARIA controls -->
       <ul
