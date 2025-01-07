@@ -20,6 +20,12 @@ const projects = [
     githubLink: "", // In development
     actionLink: "",
   },
+  {
+    title: "Form Builder",
+    description: "A form builder for personal use, still in development.",
+    githubLink: "", // In development
+    actionLink: "",
+  },
 ];
 ---
 
@@ -33,13 +39,13 @@ const projects = [
       </h1>
     </div>
     <div class="project-container-wrapper overflow-x-auto">
-      <div class="project-container flex space-x-3 mt-8">
+      <div class="project-container flex mt-8">
         {
           projects.map((project) => (
-            <div class="card bg-base-200 w-96 shadow-md">
+            <div class="card bg-base-200 w-80 shadow-md">
               <div class="card-body">
                 <h2 class="card-title text-2xl font-bold">{project.title}</h2>
-                <p>{project.description}</p>
+                <p class="text-md sm:text-base">{project.description}</p>
                 <div class="card-actions justify-end">
                   {project.githubLink && (
                     <a
@@ -101,10 +107,6 @@ const projects = [
 
 <!-- CSS styles -->
 <style>
-  .project-container-wrapper {
-    overflow-x: auto;
-  }
-
   .project-container {
     display: flex;
     gap: 1.5rem;
