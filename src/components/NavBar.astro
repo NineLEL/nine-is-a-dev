@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-md fixed top-0 left-0 w-full z-10">
+<div class="navbar bg-base-100/75 shadow-md fixed top-0 left-0 w-full z-10 backdrop-blur-xl">
   <!-- Navbar Start -->
   <div class="navbar-start">
     <div class="dropdown">
@@ -7,6 +7,43 @@
           const menu = document.getElementById("dropdown-menu") as HTMLElement;
           menu.classList.toggle("hidden");
         };
+
+        // Add a scroll listener to the window
+        window.addEventListener("scroll", () => {
+          const menu = document.getElementById("dropdown-menu") as HTMLElement;
+
+          // Get all section elements by their IDs
+          const sections = [
+            { id: "home", color: "bg-base-200" },
+            { id: "about", color: "bg-base-100" },
+            { id: "projects", color: "bg-base-200" },
+            { id: "services", color: "bg-base-100" },
+          ];
+
+          // Determine the active section based on scroll position
+          let currentSection = null;
+          for (const section of sections) {
+            const element = document.getElementById(section.id) as HTMLElement;
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              if (
+                rect.top <= window.innerHeight / 2 &&
+                rect.bottom >= window.innerHeight / 2
+              ) {
+                currentSection = section;
+                break;
+              }
+            }
+          }
+
+          // Update the dropdown menu's background color
+          if (currentSection) {
+            // Remove all possible background classes
+            sections.forEach(({ color }) => menu.classList.remove(color));
+            // Add the background class of the current section
+            menu.classList.add(currentSection.color);
+          }
+        });
       </script>
 
       <!-- Hamburger Button with Toggle -->
@@ -28,7 +65,7 @@
 
       <!-- Dropdown Menu with ARIA controls -->
       <ul
-        class="menu menu-lg dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow hidden"
+        class="menu menu-lg dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow hidden"
         aria-label="Main menu"
         id="dropdown-menu"
         aria-hidden="true"
