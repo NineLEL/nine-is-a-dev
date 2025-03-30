@@ -19,7 +19,8 @@
         class="absolute inset-0 flex items-center justify-center"
       >
         <!-- Game Button -->
-        <div
+        <button
+          type="button"
           ref="buttonRef"
           :style="{
             top: `${buttonPosition.y}px`,
@@ -28,7 +29,7 @@
           class="click-me-button cursor-pointer rounded-full bg-primary text-primary-content shadow-md hover:shadow-lg active:shadow-sm"
           @click="handleClick"
           aria-label="Click me button"
-        ></div>
+        ></button>
 
         <!-- Score Display -->
         <div
