@@ -23,8 +23,11 @@
           type="button"
           ref="buttonRef"
           :style="{
+            position: 'absolute', // Ensure position is absolute
             top: `${buttonPosition.y}px`,
             left: `${buttonPosition.x}px`,
+            width: '24px', // Explicit size needed for calculation
+            height: '24px' // Explicit size needed for calculation
           }"
           class="click-me-button cursor-pointer rounded-full bg-primary text-primary-content shadow-md hover:shadow-lg active:shadow-sm"
           @click="handleClick"
@@ -49,10 +52,20 @@ export default {
   name: "Game",
   setup() {
     const score = ref<number>(0);
-    const buttonPosition = ref({ x: 150, y: 150 }); // Initial placeholder before mount
+    const buttonPosition = ref({ x: 150, y: 150 }); // Initial placeholder
     const loading = ref(true);
-    const containerRef = ref<HTMLElement | null>(null); // Ref for the game container div
-    const buttonRef = ref<HTMLElement | null>(null);    // Ref for the clickable button div
+    const containerRef = ref<HTMLElement | null>(null);
+    const buttonRef = ref<HTMLElement | null>(null);
+
+    // --- Helper to check for overlap ---
+    const checkOverlap = (rect1: {x: number, y: number, width: number, height: number}, rect2: {x: number, y: number, width: number, height: number}): boolean => {
+      return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+      );
+    };
 
     const getRandomPosition = () => {
       if (!containerRef.value) {
@@ -62,8 +75,18 @@ export default {
 
       const containerWidth = containerRef.value.offsetWidth;
       const containerHeight = containerRef.value.offsetHeight;
-      const buttonSize = buttonRef.value?.offsetWidth || 24; // Get actual button size or fallback
+      // Use the explicitly set size, fallback needed before buttonRef is ready
+      const buttonSize = buttonRef.value?.offsetWidth || 24;
       const padding = 30; // Padding from container edges
+
+      // Define the score area (top-left corner) - adjust size as needed
+      const scoreAreaPadding = 10; // Extra buffer around score
+      const scoreAreaRect = {
+        x: 0, // Score starts near left edge
+        y: 0, // Score starts near top edge
+        width: 100 + scoreAreaPadding,  // Estimated width of "Score: XX" + padding
+        height: 40 + scoreAreaPadding, // Estimated height of score text + padding
+      };
 
       const minX = padding;
       const minY = padding;
@@ -73,22 +96,41 @@ export default {
       const rangeX = Math.max(0, maxX - minX);
       const rangeY = Math.max(0, maxY - minY);
 
-      const randomX = Math.random() * rangeX + minX;
-      const randomY = Math.random() * rangeY + minY;
+      let randomX, randomY, buttonRect, attempts = 0;
+
+      // Loop until a non-overlapping position is found (or max attempts reached)
+      do {
+        randomX = Math.random() * rangeX + minX;
+        randomY = Math.random() * rangeY + minY;
+
+        // Define the potential button position
+        buttonRect = {
+            x: randomX,
+            y: randomY,
+            width: buttonSize,
+            height: buttonSize,
+        };
+        attempts++;
+        if (attempts > 50) { // Prevent infinite loop in edge cases
+            console.warn("Could not find non-overlapping position for button.");
+            break;
+        }
+      } while (checkOverlap(buttonRect, scoreAreaRect));
+
 
       return { x: Math.floor(randomX), y: Math.floor(randomY) };
     };
 
     onMounted(() => {
-      // Ensure DOM is ready for dimension calculations
       nextTick(() => {
         if (containerRef.value) {
+          // Call once to set initial position correctly after mount
+          // buttonRef should be available here due to nextTick
           buttonPosition.value = getRandomPosition();
         } else {
-          // Fallback if ref somehow failed
           buttonPosition.value = { x: 150, y: 150 };
         }
-        loading.value = false; // Show game content
+        loading.value = false;
       });
     });
 
@@ -97,7 +139,7 @@ export default {
       buttonPosition.value = getRandomPosition();
     };
 
-    // --- Transition Hooks ---
+    // --- Transition Hooks (remain the same) ---
     const beforeEnter = (el: Element) => {
       (el as HTMLElement).style.opacity = "0";
       (el as HTMLElement).style.transform = "scale(0.8)";
@@ -112,7 +154,7 @@ export default {
           (el as HTMLElement).style.transform = "scale(1)";
         });
       });
-      setTimeout(done, 500); // Corresponds to transition duration
+      setTimeout(done, 500);
     };
 
     const leave = (el: Element, done: () => void) => {
@@ -120,7 +162,7 @@ export default {
         "opacity 0.5s ease, transform 0.5s ease";
       (el as HTMLElement).style.opacity = "0";
       (el as HTMLElement).style.transform = "scale(0.8)";
-      setTimeout(done, 500); // Corresponds to transition duration
+      setTimeout(done, 500);
     };
 
     return {
@@ -140,9 +182,9 @@ export default {
 
 <style scoped>
 .click-me-button {
-  position: absolute;
-  width: 24px;
-  height: 24px;
+  /* position: absolute; no longer needed here, set via :style */
+  /* width: 24px; no longer needed here */
+  /* height: 24px; no longer needed here */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +223,6 @@ export default {
 }
 
 .drop-shadow-sm {
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); /* Example generic shadow */
-  /* filter: drop-shadow(0 1px 1px hsl(var(--b1) / 0.4)); /* Example using DaisyUI base color variable */
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
 }
 </style>
