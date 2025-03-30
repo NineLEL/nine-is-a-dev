@@ -14,13 +14,13 @@ const navLinks = [
   <div class="navbar-start">
     <div class="dropdown">
       <button
+        type="button"
         tabindex="0"
         class="btn btn-ghost rounded-md lg:hidden transition hover:bg-base-content/10 focus:bg-base-content/10"
         aria-label="Open menu"
         id="mobile-menu-button"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,14 +44,16 @@ const navLinks = [
                invisible pointer-events-none"
         aria-label="Main menu"
         id="mobile-menu"
+        role="menu"
       >
         {
           navLinks.map((link) => (
-            <li>
+            <li role="none">
               <a
                 href={link.href}
                 class="nav-link text-base font-medium transition-colors hover:text-primary"
                 data-target-id={link.href.substring(1)}
+                role="menuitem"
               >
                 {link.label}
               </a>
@@ -66,7 +68,6 @@ const navLinks = [
       class="btn btn-ghost rounded-md text-3xl font-extrabold normal-case
              bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent
              transition duration-300 ease-in-out hover:opacity-80"
-      id="navbar-logo"
       aria-label="Go to top of page">Nine</a
     >
   </div>
@@ -129,6 +130,7 @@ const navLinks = [
 </div>
 
 <script is:inline>
+  // Mobile Menu & Scrollspy Logic
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const allNavLinks = document.querySelectorAll(".nav-link");
@@ -143,31 +145,23 @@ const navLinks = [
     if (mobileMenu) {
       if (isOpen) {
         mobileMenu.classList.remove(
-          "scale-95",
-          "opacity-0",
-          "invisible",
-          "pointer-events-none"
+          "scale-95", "opacity-0", "invisible", "pointer-events-none"
         );
         mobileMenu.classList.add(
-          "scale-100",
-          "opacity-100",
-          "visible",
-          "pointer-events-auto"
+          "scale-100", "opacity-100", "visible", "pointer-events-auto"
         );
-        mobileMenu.focus();
+        // Optional: Focus first item when opened for better keyboard nav
+        // const firstLink = mobileMenu.querySelector('a');
+        // if (firstLink) firstLink.focus();
       } else {
         mobileMenu.classList.add(
-          "scale-95",
-          "opacity-0",
-          "invisible",
-          "pointer-events-none"
+          "scale-95", "opacity-0", "invisible", "pointer-events-none"
         );
         mobileMenu.classList.remove(
-          "scale-100",
-          "opacity-100",
-          "visible",
-          "pointer-events-auto"
+          "scale-100", "opacity-100", "visible", "pointer-events-auto"
         );
+        // Optional: Return focus to the toggle button when closing
+        // if (mobileMenuButton) mobileMenuButton.focus();
       }
     }
   }
@@ -180,13 +174,24 @@ const navLinks = [
   }
 
   if (mobileMenu) {
+    // Close menu when clicking a link inside it
     mobileMenu.addEventListener("click", (event) => {
       if (event.target.tagName === "A" && event.target.closest(".nav-link")) {
         setMobileMenuOpen(false);
+        // Optional: Return focus to button after selection
+        // if (mobileMenuButton) mobileMenuButton.focus();
       }
+    });
+    // Handle Esc key to close menu
+    mobileMenu.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            setMobileMenuOpen(false);
+            if (mobileMenuButton) mobileMenuButton.focus(); // Return focus
+        }
     });
   }
 
+  // Close menu when clicking outside
   document.addEventListener("click", (event) => {
     if (
       isMobileMenuOpen &&
@@ -199,20 +204,16 @@ const navLinks = [
     }
   });
 
+  // Scrollspy logic
   const sectionsData = [
-    { id: "home", bgColor: "bg-base-300" },
-    { id: "about", bgColor: "bg-base-100" },
-    { id: "projects", bgColor: "bg-base-300" },
-    { id: "services", bgColor: "bg-base-100" },
-    { id: "contacts", bgColor: "bg-base-300" },
+    { id: "home" }, { id: "about" }, { id: "projects" },
+    { id: "services" }, { id: "contacts" },
   ];
   const sectionElements = sectionsData
-    .map((s) => ({ ...s, element: document.getElementById(s.id) }))
-    .filter((s) => s.element);
+    .map(s => ({ ...s, element: document.getElementById(s.id) }))
+    .filter(s => s.element);
 
   function handleScroll() {
-    if (!mobileMenu) return;
-
     const scrollThreshold = window.innerHeight * 0.4;
     let currentActiveSectionId = null;
 
@@ -225,25 +226,12 @@ const navLinks = [
         }
       }
     }
+    // Fallback for top of page
     if (!currentActiveSectionId && window.scrollY < window.innerHeight * 0.8) {
       currentActiveSectionId = "home";
     }
 
-    const activeSectionData = sectionsData.find(
-      (s) => s.id === currentActiveSectionId
-    );
-    if (activeSectionData) {
-      sectionsData.forEach(({ bgColor }) =>
-        mobileMenu.classList.remove(bgColor)
-      );
-      mobileMenu.classList.add(activeSectionData.bgColor);
-    } else {
-      sectionsData.forEach(({ bgColor }) =>
-        mobileMenu.classList.remove(bgColor)
-      );
-      mobileMenu.classList.add("bg-base-200");
-    }
-
+    // Update nav link styles
     allNavLinks.forEach((link) => {
       const targetId = link.dataset.targetId;
       if (targetId === currentActiveSectionId) {
@@ -255,42 +243,38 @@ const navLinks = [
   }
 
   let scrollTimeout;
-  window.addEventListener(
-    "scroll",
-    () => {
+  window.addEventListener("scroll", () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(handleScroll, 50);
-    },
-    { passive: true }
-  );
+      scrollTimeout = setTimeout(handleScroll, 50); // Debounce scroll handler
+    }, { passive: true });
 
-  document.addEventListener("DOMContentLoaded", handleScroll);
+  document.addEventListener("DOMContentLoaded", handleScroll); // Initial check
 </script>
 
 <script is:inline>
+  // Theme Toggle Logic
   const themeToggle = document.getElementById("theme-switcher");
   const htmlElement = document.documentElement;
 
   if (themeToggle instanceof HTMLInputElement) {
     function applyTheme(theme) {
+      // Set daisyUI theme and potentially a class for non-daisyUI styling
+      htmlElement.dataset.theme = theme;
       if (theme === "dark") {
         htmlElement.classList.add("dark");
-        htmlElement.dataset.theme = "dark";
-        themeToggle.checked = false;
+        themeToggle.checked = false; // swap-on is moon (dark)
       } else {
         htmlElement.classList.remove("dark");
-        htmlElement.dataset.theme = "light";
-        themeToggle.checked = true;
+        themeToggle.checked = true; // swap-off is sun (light)
       }
     }
+
     document.addEventListener("DOMContentLoaded", () => {
-      const initialTheme =
-        window.initialTheme ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
+      const storedTheme = localStorage.getItem("theme");
+      const initialTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       applyTheme(initialTheme);
     });
+
     themeToggle.addEventListener("change", () => {
       const newTheme = themeToggle.checked ? "light" : "dark";
       applyTheme(newTheme);
@@ -304,45 +288,3 @@ const navLinks = [
     console.error("Theme toggle element not found.");
   }
 </script>
-
-<script is:inline>
-  const logoElement = document.getElementById("navbar-logo");
-  if (logoElement) {
-    logoElement.addEventListener("click", (event) => {
-      // event.preventDefault();
-      logoElement.classList.remove("animate-fancy-click");
-      void logoElement.offsetWidth;
-      logoElement.classList.add("animate-fancy-click");
-      logoElement.addEventListener(
-        "animationend",
-        () => {
-          logoElement.classList.remove("animate-fancy-click");
-        },
-        { once: true }
-      );
-    });
-  } else {
-    console.error("Navbar logo element not found.");
-  }
-</script>
-
-<style>
-  @keyframes fancy-click-animation {
-    0% {
-      transform: scale(1) rotate(0deg);
-    }
-    30% {
-      transform: scale(1.15) rotate(-4deg);
-    }
-    60% {
-      transform: scale(0.95) rotate(3deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-    }
-  }
-  .animate-fancy-click {
-    display: inline-block;
-    animation: fancy-click-animation 0.5s ease-out forwards;
-  }
-</style>
