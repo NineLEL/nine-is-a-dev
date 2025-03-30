@@ -1,5 +1,4 @@
 ---
-// src/layouts/BaseLayout.astro
 import NavBar from "../components/NavBar.astro";
 import "../styles/global.css";
 
@@ -22,45 +21,52 @@ const siteName = "Nine's Personal Site";
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-  {/* <-- REMOVE data-theme="light" */}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  {/* ... other meta tags ... */}
-  <title>{title}</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="generator" content={Astro.generator} />
-  {/* ... OG tags ... */}
-  <slot name="head" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-  {/* === THEME INITIALIZATION SCRIPT === */}
-  <script is:inline>
-    const theme = (() => {
-      if (
-        typeof localStorage !== "undefined" &&
-        localStorage.getItem("theme")
-      ) {
-        return localStorage.getItem("theme");
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+
+    <slot name="head" />
+
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+        document.documentElement.dataset.theme = "dark";
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.dataset.theme = "light";
       }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-      return "light"; // Default to light
-    })();
-
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.dataset.theme = "dark"; // Set data-theme for DaisyUI
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.dataset.theme = "light"; // Set data-theme for DaisyUI
-    }
-    // Store the resolved theme globally for the NavBar script to use easily
-    window.initialTheme = theme;
-  </script>
-  {/* === END THEME SCRIPT === */}
-
-
+      window.initialTheme = theme;
+    </script>
+  </head>
   <body>
     <NavBar />
     <main class="relative">

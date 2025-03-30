@@ -1,10 +1,10 @@
 ---
 // src/components/NavBar.astro
 const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#services", label: "Services" },
-    { href: "#contacts", label: "Contacts" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#services", label: "Services" },
+  { href: "#contacts", label: "Contacts" },
 ];
 ---
 
@@ -12,7 +12,6 @@ const navLinks = [
   class="navbar fixed left-0 top-0 z-50 w-full bg-base-100/80 shadow-md backdrop-blur-lg border-b border-base-content/10"
 >
   <div class="navbar-start">
-    {/* Dropdown for Mobile */}
     <div class="dropdown">
       <label
         tabindex="0"
@@ -24,13 +23,19 @@ const navLinks = [
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h8m-8 6h16"></path>
         </svg>
       </label>
 
-      {/* Mobile Menu Panel */}
       <ul
         tabindex="-1"
         class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-box bg-base-200 p-2 shadow-xl
@@ -39,37 +44,37 @@ const navLinks = [
         aria-label="Main menu"
         id="mobile-menu"
       >
-        {navLinks.map(link => (
-          <li>
-            <a
-              href={link.href}
-              class="nav-link text-base font-medium transition-colors hover:text-primary"
-              data-target-id={link.href.substring(1)}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="nav-link text-base font-medium transition-colors hover:text-primary"
+                data-target-id={link.href.substring(1)}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
 
-    {/* Site Logo/Title */}
     <a
       href="#home"
       class="btn btn-ghost rounded-md text-3xl font-extrabold normal-case
              bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent
              transition duration-300 ease-in-out hover:opacity-80"
       id="navbar-logo"
-      aria-label="Go to top of page"
-      >Nine</a
+      aria-label="Go to top of page">Nine</a
     >
   </div>
 
-  {/* Desktop Navigation */}
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal space-x-1 px-1">
-      {navLinks.map(link => (
-         <li>
+      {
+        navLinks.map((link) => (
+          <li>
             <a
               href={link.href}
               class="nav-link rounded-md px-4 py-2 text-base font-medium transition-colors hover:text-primary active:!bg-primary/20"
@@ -77,153 +82,194 @@ const navLinks = [
             >
               {link.label}
             </a>
-         </li>
-      ))}
+          </li>
+        ))
+      }
     </ul>
   </div>
 
-  {/* Navbar End Controls */}
   <div class="navbar-end flex items-center space-x-2 sm:space-x-4">
-    {/* Theme Toggle */}
-    <label for="theme-switcher" class="swap swap-rotate btn btn-ghost btn-circle" aria-label="Toggle theme">
-      <input type="checkbox" id="theme-switcher" class="hidden" aria-label="Theme controller"/>
-      <svg class="swap-on h-5 w-5 sm:h-6 sm:w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>
-      <svg class="swap-off h-5 w-5 sm:h-6 sm:w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
+    <label
+      for="theme-switcher"
+      class="swap swap-rotate btn btn-ghost btn-circle"
+      aria-label="Toggle theme"
+    >
+      <input
+        type="checkbox"
+        id="theme-switcher"
+        class="hidden"
+        aria-label="Theme controller"
+      />
+      <svg
+        class="swap-on h-5 w-5 sm:h-6 sm:w-6 fill-current"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        ><path
+          d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+        ></path></svg
+      >
+      <svg
+        class="swap-off h-5 w-5 sm:h-6 sm:w-6 fill-current"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        ><path
+          d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
+        ></path></svg
+      >
     </label>
-    {/* Contacts Button */}
     <div>
-      <a href="#contacts" class="btn btn-primary btn-outline rounded-md text-base sm:text-lg">Contacts</a>
+      <a
+        href="#contacts"
+        class="btn btn-primary btn-outline rounded-md text-base sm:text-lg"
+        >Contacts</a
+      >
     </div>
   </div>
 </div>
 
-{/* ----- SCRIPTS ----- */}
-
 <script is:inline>
-  // --- Mobile Menu & Active Link Logic ---
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const allNavLinks = document.querySelectorAll('.nav-link'); // Selects both mobile and desktop links
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const allNavLinks = document.querySelectorAll(".nav-link");
 
-  // State for mobile menu
   let isMobileMenuOpen = false;
 
   function setMobileMenuOpen(isOpen) {
     isMobileMenuOpen = isOpen;
     if (mobileMenuButton) {
-        mobileMenuButton.setAttribute('aria-expanded', isOpen.toString());
+      mobileMenuButton.setAttribute("aria-expanded", isOpen.toString());
     }
     if (mobileMenu) {
-        if (isOpen) {
-            mobileMenu.classList.remove('scale-95', 'opacity-0', 'invisible', 'pointer-events-none');
-            mobileMenu.classList.add('scale-100', 'opacity-100', 'visible', 'pointer-events-auto');
-            mobileMenu.focus(); // Optional: focus menu for accessibility
-        } else {
-            mobileMenu.classList.add('scale-95', 'opacity-0', 'invisible', 'pointer-events-none');
-            mobileMenu.classList.remove('scale-100', 'opacity-100', 'visible', 'pointer-events-auto');
-        }
+      if (isOpen) {
+        mobileMenu.classList.remove(
+          "scale-95",
+          "opacity-0",
+          "invisible",
+          "pointer-events-none"
+        );
+        mobileMenu.classList.add(
+          "scale-100",
+          "opacity-100",
+          "visible",
+          "pointer-events-auto"
+        );
+        mobileMenu.focus();
+      } else {
+        mobileMenu.classList.add(
+          "scale-95",
+          "opacity-0",
+          "invisible",
+          "pointer-events-none"
+        );
+        mobileMenu.classList.remove(
+          "scale-100",
+          "opacity-100",
+          "visible",
+          "pointer-events-auto"
+        );
+      }
     }
   }
 
-  // Toggle Mobile Menu
   if (mobileMenuButton) {
-    mobileMenuButton.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent triggering the document click listener
-        setMobileMenuOpen(!isMobileMenuOpen);
+    mobileMenuButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setMobileMenuOpen(!isMobileMenuOpen);
     });
   }
 
-  // Close mobile menu if a link inside it is clicked
   if (mobileMenu) {
-      mobileMenu.addEventListener('click', (event) => {
-          if (event.target.tagName === 'A' && event.target.closest('.nav-link')) {
-              setMobileMenuOpen(false);
-              // Allow smooth scroll to happen
-          }
-      });
+    mobileMenu.addEventListener("click", (event) => {
+      if (event.target.tagName === "A" && event.target.closest(".nav-link")) {
+        setMobileMenuOpen(false);
+      }
+    });
   }
 
-  // Close mobile menu on click outside
-  document.addEventListener('click', (event) => {
-    if (isMobileMenuOpen && mobileMenu && mobileMenuButton &&
-        !mobileMenu.contains(event.target) &&
-        !mobileMenuButton.contains(event.target))
-    {
+  document.addEventListener("click", (event) => {
+    if (
+      isMobileMenuOpen &&
+      mobileMenu &&
+      mobileMenuButton &&
+      !mobileMenu.contains(event.target) &&
+      !mobileMenuButton.contains(event.target)
+    ) {
       setMobileMenuOpen(false);
     }
   });
 
-  // --- Active Link & Dropdown Background on Scroll ---
   const sectionsData = [
-    { id: "home", bgColor: "bg-base-300" }, // Use a consistent background color system
+    { id: "home", bgColor: "bg-base-300" },
     { id: "about", bgColor: "bg-base-100" },
     { id: "projects", bgColor: "bg-base-300" },
     { id: "services", bgColor: "bg-base-100" },
     { id: "contacts", bgColor: "bg-base-300" },
   ];
-  const sectionElements = sectionsData.map(s => ({ ...s, element: document.getElementById(s.id) })).filter(s => s.element);
+  const sectionElements = sectionsData
+    .map((s) => ({ ...s, element: document.getElementById(s.id) }))
+    .filter((s) => s.element);
 
   function handleScroll() {
-    if (!mobileMenu) return; // Need mobile menu for background change
+    if (!mobileMenu) return;
 
-    const scrollThreshold = window.innerHeight * 0.4; // ~40% from top
+    const scrollThreshold = window.innerHeight * 0.4;
     let currentActiveSectionId = null;
 
-    // Determine active section
     for (const section of sectionElements) {
       if (section.element) {
         const rect = section.element.getBoundingClientRect();
-        // Check if the top of the section is within the threshold area
         if (rect.top <= scrollThreshold && rect.bottom >= scrollThreshold) {
           currentActiveSectionId = section.id;
           break;
         }
       }
     }
-     // If no section is active at the threshold (e.g., between sections), maybe check which one's top is closest?
     if (!currentActiveSectionId && window.scrollY < window.innerHeight * 0.8) {
-        currentActiveSectionId = 'home'; // Default to home if near top
+      currentActiveSectionId = "home";
     }
 
-    // Update Dropdown Background
-    const activeSectionData = sectionsData.find(s => s.id === currentActiveSectionId);
+    const activeSectionData = sectionsData.find(
+      (s) => s.id === currentActiveSectionId
+    );
     if (activeSectionData) {
-      sectionsData.forEach(({ bgColor }) => mobileMenu.classList.remove(bgColor));
+      sectionsData.forEach(({ bgColor }) =>
+        mobileMenu.classList.remove(bgColor)
+      );
       mobileMenu.classList.add(activeSectionData.bgColor);
     } else {
-      // Fallback background if needed when no section is active
-      sectionsData.forEach(({ bgColor }) => mobileMenu.classList.remove(bgColor));
-      mobileMenu.classList.add('bg-base-200'); // Default
+      sectionsData.forEach(({ bgColor }) =>
+        mobileMenu.classList.remove(bgColor)
+      );
+      mobileMenu.classList.add("bg-base-200");
     }
 
-    // Update Active Link Styles
-    allNavLinks.forEach(link => {
+    allNavLinks.forEach((link) => {
       const targetId = link.dataset.targetId;
       if (targetId === currentActiveSectionId) {
-        link.classList.add('text-primary', '!font-semibold'); // Active styles
+        link.classList.add("text-primary", "!font-semibold");
       } else {
-        link.classList.remove('text-primary', '!font-semibold'); // Remove active styles
+        link.classList.remove("text-primary", "!font-semibold");
       }
     });
   }
 
-  // Debounce scroll handler for performance
   let scrollTimeout;
-  window.addEventListener("scroll", () => {
+  window.addEventListener(
+    "scroll",
+    () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(handleScroll, 50); // Adjust debounce delay if needed
-  }, { passive: true });
+      scrollTimeout = setTimeout(handleScroll, 50);
+    },
+    { passive: true }
+  );
 
-  // Run once on load
-  document.addEventListener('DOMContentLoaded', handleScroll);
-
+  document.addEventListener("DOMContentLoaded", handleScroll);
 </script>
 
 <script is:inline>
-  // --- Theme Switcher Logic (Remains the same) ---
   const themeToggle = document.getElementById("theme-switcher");
   const htmlElement = document.documentElement;
-  // ... (rest of theme switcher code is unchanged) ...
+
   if (themeToggle instanceof HTMLInputElement) {
     function applyTheme(theme) {
       if (theme === "dark") {
@@ -237,7 +283,11 @@ const navLinks = [
       }
     }
     document.addEventListener("DOMContentLoaded", () => {
-      const initialTheme = window.initialTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const initialTheme =
+        window.initialTheme ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
       applyTheme(initialTheme);
     });
     themeToggle.addEventListener("change", () => {
@@ -245,54 +295,53 @@ const navLinks = [
       applyTheme(newTheme);
       try {
         localStorage.setItem("theme", newTheme);
-      } catch (e) { console.error("LocalStorage access error.", e); }
+      } catch (e) {
+        console.error("LocalStorage access error.", e);
+      }
     });
-  } else { console.error("Theme toggle element not found."); }
+  } else {
+    console.error("Theme toggle element not found.");
+  }
 </script>
 
 <script is:inline>
-  // --- Logo Click Animation Logic (Remains the same) ---
-  const logoElement = document.getElementById('navbar-logo');
-  // ... (rest of logo animation code is unchanged) ...
+  const logoElement = document.getElementById("navbar-logo");
   if (logoElement) {
-    logoElement.addEventListener('click', (event) => {
-      // event.preventDefault(); // Uncomment if click shouldn't scroll
-      logoElement.classList.remove('animate-fancy-click');
-      void logoElement.offsetWidth; // Force reflow
-      logoElement.classList.add('animate-fancy-click');
-      logoElement.addEventListener('animationend', () => {
-        logoElement.classList.remove('animate-fancy-click');
-      }, { once: true });
+    logoElement.addEventListener("click", (event) => {
+      // event.preventDefault();
+      logoElement.classList.remove("animate-fancy-click");
+      void logoElement.offsetWidth;
+      logoElement.classList.add("animate-fancy-click");
+      logoElement.addEventListener(
+        "animationend",
+        () => {
+          logoElement.classList.remove("animate-fancy-click");
+        },
+        { once: true }
+      );
     });
-  } else { console.error("Navbar logo element not found."); }
+  } else {
+    console.error("Navbar logo element not found.");
+  }
 </script>
 
-{/* ----- STYLES ----- */}
 <style>
-  /* Logo Click Animation */
   @keyframes fancy-click-animation {
-    0% { transform: scale(1) rotate(0deg); }
-    30% { transform: scale(1.15) rotate(-4deg); }
-    60% { transform: scale(0.95) rotate(3deg); }
-    100% { transform: scale(1) rotate(0deg); }
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+    30% {
+      transform: scale(1.15) rotate(-4deg);
+    }
+    60% {
+      transform: scale(0.95) rotate(3deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
   }
   .animate-fancy-click {
     display: inline-block;
     animation: fancy-click-animation 0.5s ease-out forwards;
   }
-
-  /* Active link styles are now applied via JS using Tailwind classes */
-  /* Example: .nav-link.active { @apply text-primary font-semibold; } */
-
-  /* Ensure dropdown has correct base state for transitions */
-  #mobile-menu {
-     /* Base state defined inline with Tailwind */
-     /* opacity: 0; scale: 0.95; visibility: hidden; pointer-events: none; */
-     /* transition: opacity 200ms ease-out, transform 200ms ease-out, visibility 200ms ease-out; */
-  }
-  /* Open state defined inline with Tailwind, toggled via JS */
-  /* #mobile-menu.dropdown-open {
-       opacity: 1; scale: 1; visibility: visible; pointer-events: auto;
-     } */
-
 </style>
