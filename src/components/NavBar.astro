@@ -38,7 +38,7 @@ const navLinks = [
 
       <ul
         tabindex="-1"
-        class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-box bg-base-200 p-2 shadow-xl
+        class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-box bg-neutral p-2 shadow-xl
                origin-top-left scale-95 opacity-0 transition-all duration-200 ease-out
                invisible pointer-events-none"
         aria-label="Main menu"
@@ -50,7 +50,7 @@ const navLinks = [
             <li role="none">
               <a
                 href={link.href}
-                class="nav-link text-base font-medium transition-colors hover:text-primary"
+                class="nav-link text-base font-medium transition-colors"
                 data-target-id={link.href.substring(1)}
                 role="menuitem"
               >
@@ -144,20 +144,32 @@ const navLinks = [
     if (mobileMenu) {
       if (isOpen) {
         mobileMenu.classList.remove(
-          "scale-95", "opacity-0", "invisible", "pointer-events-none"
+          "scale-95",
+          "opacity-0",
+          "invisible",
+          "pointer-events-none"
         );
         mobileMenu.classList.add(
-          "scale-100", "opacity-100", "visible", "pointer-events-auto"
+          "scale-100",
+          "opacity-100",
+          "visible",
+          "pointer-events-auto"
         );
         // Optional: Focus first item when opened for better keyboard nav
         // const firstLink = mobileMenu.querySelector('a');
         // if (firstLink) firstLink.focus();
       } else {
         mobileMenu.classList.add(
-          "scale-95", "opacity-0", "invisible", "pointer-events-none"
+          "scale-95",
+          "opacity-0",
+          "invisible",
+          "pointer-events-none"
         );
         mobileMenu.classList.remove(
-          "scale-100", "opacity-100", "visible", "pointer-events-auto"
+          "scale-100",
+          "opacity-100",
+          "visible",
+          "pointer-events-auto"
         );
         // Optional: Return focus to the toggle button when closing
         // if (mobileMenuButton) mobileMenuButton.focus();
@@ -182,11 +194,11 @@ const navLinks = [
       }
     });
     // Handle Esc key to close menu
-    mobileMenu.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            setMobileMenuOpen(false);
-            if (mobileMenuButton) mobileMenuButton.focus(); // Return focus
-        }
+    mobileMenu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        if (mobileMenuButton) mobileMenuButton.focus(); // Return focus
+      }
     });
   }
 
@@ -205,12 +217,15 @@ const navLinks = [
 
   // Scrollspy logic
   const sectionsData = [
-    { id: "home" }, { id: "about" }, { id: "projects" },
-    { id: "services" }, { id: "contacts" },
+    { id: "home" },
+    { id: "about" },
+    { id: "projects" },
+    { id: "services" },
+    { id: "contacts" },
   ];
   const sectionElements = sectionsData
-    .map(s => ({ ...s, element: document.getElementById(s.id) }))
-    .filter(s => s.element);
+    .map((s) => ({ ...s, element: document.getElementById(s.id) }))
+    .filter((s) => s.element);
 
   function handleScroll() {
     const scrollThreshold = window.innerHeight * 0.4;
@@ -242,10 +257,14 @@ const navLinks = [
   }
 
   let scrollTimeout;
-  window.addEventListener("scroll", () => {
+  window.addEventListener(
+    "scroll",
+    () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(handleScroll, 50); // Debounce scroll handler
-    }, { passive: true });
+    },
+    { passive: true }
+  );
 
   document.addEventListener("DOMContentLoaded", handleScroll); // Initial check
 </script>
@@ -270,7 +289,11 @@ const navLinks = [
 
     document.addEventListener("DOMContentLoaded", () => {
       const storedTheme = localStorage.getItem("theme");
-      const initialTheme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const initialTheme =
+        storedTheme ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
       applyTheme(initialTheme);
     });
 
