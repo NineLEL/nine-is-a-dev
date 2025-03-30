@@ -1,0 +1,31 @@
+/* src/styles/global.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold;
+  }
+}
+
+@layer components {
+  /* Add custom global component styles here if needed */
+  /* Example: */
+  /* .custom-button {
+       @apply py-2 px-4 bg-blue-500 text-white rounded;
+     } */
+}
+
+@layer utilities {
+  /* Add custom utility classes here if needed */
+  /* Example: */
+  /* .text-shadow {
+       text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+     } */
+}

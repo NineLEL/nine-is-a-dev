@@ -1,0 +1,70 @@
+---
+// src/layouts/BaseLayout.astro
+import NavBar from "../components/NavBar.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImageUrl?: string;
+  ogUrl?: string;
+}
+
+const {
+  title = "Nine | Personal Website",
+  description = "Hi, I'm Nine. Welcome to my personal portfolio...",
+  ogImageUrl,
+  ogUrl = Astro.url.toString(),
+} = Astro.props;
+
+const siteName = "Nine's Personal Site";
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  {/* <-- REMOVE data-theme="light" */}
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {/* ... other meta tags ... */}
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  {/* ... OG tags ... */}
+  <slot name="head" />
+
+  {/* === THEME INITIALIZATION SCRIPT === */}
+  <script is:inline>
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light"; // Default to light
+    })();
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.dataset.theme = "dark"; // Set data-theme for DaisyUI
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.dataset.theme = "light"; // Set data-theme for DaisyUI
+    }
+    // Store the resolved theme globally for the NavBar script to use easily
+    window.initialTheme = theme;
+  </script>
+  {/* === END THEME SCRIPT === */}
+
+
+  <body>
+    <NavBar />
+    <main class="relative">
+      <slot />
+    </main>
+  </body>
+</html>
