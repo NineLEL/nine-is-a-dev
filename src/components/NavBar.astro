@@ -273,17 +273,17 @@ const navLinks = [
     }
 
     // --- Dynamic Menu Background Update ---
-    if (
-      mobileMenu &&
-      currentActiveSectionId &&
-      menuBgMapping[currentActiveSectionId]
-    ) {
-      const newBgClass = menuBgMapping[currentActiveSectionId];
-      // Remove all potential dynamic background classes first
-      mobileMenu.classList.remove(...allMenuBgClasses);
-      // Add the new background class
-      mobileMenu.classList.add(newBgClass);
-    }
+    // if (
+    //   mobileMenu &&
+    //   currentActiveSectionId &&
+    //   menuBgMapping[currentActiveSectionId]
+    // ) {
+    //   const newBgClass = menuBgMapping[currentActiveSectionId];
+    //   // Remove all potential dynamic background classes first
+    //   mobileMenu.classList.remove(...allMenuBgClasses);
+    //   // Add the new background class
+    //   mobileMenu.classList.add(newBgClass);
+    // }
     // --- End Dynamic Menu Background Update ---
 
     // Update nav link styles
