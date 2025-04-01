@@ -1,0 +1,262 @@
+---
+// src/components/Projects.astro
+
+// Define the structure for a single project
+interface Project {
+  title: string;
+  description: string;
+  color?: string; // Optional: Hex color for background if no image
+  image?: string; // Optional: URL/path to a banner image (overrides color)
+  githubLink?: string; // Optional: Link to GitHub repository
+  websiteLink?: string; // Optional: Link to live website/demo
+}
+
+const projectsData: Project[] = [
+  {
+    title: "nine-is-a-dev",
+    description:
+      "A personal website built with Astro, Vue, TailwindCSS and DaisyUI.",
+    githubLink: "https://github.com/NineLEL/nine-is-a-dev",
+    websiteLink: "https://nine.is-a.dev",
+  },
+  {
+    title: "Saiko's Pet",
+    description: "A Discord bot with random features and image manipulation.",
+    githubLink: "", // The bot is not open source.
+    websiteLink:
+      "https://discord.com/oauth2/authorize?client_id=927108202867359745&permissions=1738314997956433&integration_type=0&scope=bot",
+  },
+  {
+    title: "card-nine-is-a-dev",
+    description: "A personal card generator, still in development.",
+    githubLink: "",
+    websiteLink: "",
+  },
+  {
+    title: "Form Builder",
+    description:
+      "A dynamic form builder for personal use, still in development.",
+  },
+  // Add more projects...
+];
+
+// Helper function to get background style
+function getCardFigureStyle(project: Project): string | undefined {
+  if (!project.image && project.color) {
+    return `background-color: ${project.color};`;
+  }
+  return undefined;
+}
+
+// Using DaisyUI CSS variables for theme compatibility
+const gradientFadeColor = "hsl(var(--b1))"; // base-100 background
+// const gradientFadeColor = 'hsl(var(--b2))'; // Use if section is on base-200
+---
+
+<section
+  id="projects"
+  class="min-h-screen flex flex-col items-center justify-center bg-base-100 pt-20 pb-12 md:py-24"
+  aria-labelledby="projects-heading"
+>
+  <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full text-center">
+      <h2
+        id="projects-heading"
+        class="text-5xl sm:text-5xl md:text-6xl font-bold sm:mb-12 text-primary"
+      >
+        <span
+          class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+          >My Projects</span
+        >
+      </h2>
+
+      <div
+        class="relative mt-10"
+        aria-label="Project gallery, scroll horizontally"
+      >
+        <div
+          class="absolute top-0 bottom-0 left-0 z-10 w-16 sm:w-20 pointer-events-none bg-gradient-to-r from-[var(--gradient-fade-color)] to-transparent"
+          style={`--gradient-fade-color: ${gradientFadeColor};`}
+          aria-hidden="true"
+        >
+        </div>
+
+        <div
+          class="flex overflow-x-auto py-4 px-4
+            scroll-pl-4 snap-x mandatory
+            scrollbar-thin scrollbar-thumb-primary scrollbar-track-base-300
+            gap-4 sm:gap-6"
+          style="-webkit-overflow-scrolling: touch;"
+        >
+          {
+            projectsData.map((project) => (
+              <div
+                class="
+                card w-72 sm:w-80
+                bg-base-200 shadow-xl flex-shrink-0
+                snap-start
+                my-2 transform hover:scale-[1.02] transition-transform duration-200
+                relative
+              "
+              >
+                <figure
+                  class="h-48 bg-base-300 flex items-center justify-center overflow-hidden"
+                  style={getCardFigureStyle(project)}
+                >
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt={`${project.title} banner`}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      width="400"
+                      height="192"
+                      decoding="async"
+                    />
+                  ) : (
+                    !project.color && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-16 w-16 text-base-content opacity-20"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                        />
+                      </svg>
+                    )
+                  )}
+                </figure>
+                <div class="card-body p-4 sm:p-5 flex flex-col">
+                  <h3 class="card-title font-bold text-lg sm:text-xl">
+                    {project.title}
+                  </h3>
+                  <p class="text-base-content text-opacity-80 flex-grow text-left text-sm sm:text-base mb-4">
+                    {project.description}
+                  </p>
+                  <div class="card-actions justify-end mt-auto pt-2">
+                    {project.githubLink || project.websiteLink ? (
+                      <>
+                        {project.githubLink && (
+                          <a
+                            href={project.githubLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-sm btn-ghost"
+                            aria-label={`View ${project.title} on GitHub`}
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="w-5 h-5 mr-1 sm:mr-2"
+                              viewBox="0 0 98 96"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                              />
+                            </svg>
+                            GitHub
+                          </a>
+                        )}
+                        {project.websiteLink && (
+                          <a
+                            href={project.websiteLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-sm btn-primary"
+                            aria-label={`Visit the ${project.title} website`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              class="w-5 h-5 mr-1 sm:mr-2"
+                              viewBox="0 0 512 512"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <g transform="translate(0 512) scale(0.1 -0.1)">
+                                <path d="M3200 4320v-160h366l366-3-1066-1049c-586-577-1066-1052-1066-1055 0-8 243-251 251-251 3 0 478 480 1055 1066l1049 1066 3-366 2-366h160 160v640 640h-640-640v-160z" />
+                                <path d="M822 4145c-188-41-361-183-444-364-61-132-59-73-56-1574l3-1372 27-73c38-105 83-176 158-252 76-75 147-120 252-158l73-27h1400 1400l70 22c98 31 189 87 265 163 75 76 120 148 158 252l27 73 3 863 3 862h-160-160l-3-847-3-848-28-57c-32-64-80-111-146-142l-46-21h-1375-1375l-46 21c-66 31-114 78-146 142l-28 57v1375 1375l28 57c32 64 80 111 146 142 45 21 56 21 894 24l847 3v159 160l-837-1c-668 0-851-3-901-14z" />
+                              </g>
+                            </svg>
+                            Visit
+                          </a>
+                        )}
+                      </>
+                    ) : (
+                      <p class="text-xs text-base-content text-right opacity-60 italic">
+                        (coming soon)
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+          <div class="flex-shrink-0 w-px h-px snap-end" aria-hidden="true">
+          </div>
+        </div>
+
+        <div
+          class="absolute top-0 bottom-0 right-0 z-10 w-16 sm:w-20 pointer-events-none bg-gradient-to-l from-[var(--gradient-fade-color)] to-transparent"
+          style={`--gradient-fade-color: ${gradientFadeColor};`}
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style is:global>
+    /* Basic fallback scrollbar styling for Webkit browsers */
+    .scrollbar-thin::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+    }
+    .scrollbar-track-base-300::-webkit-scrollbar-track {
+      background-color: hsl(var(--b3));
+      border-radius: 10px;
+    }
+    .scrollbar-thumb-primary::-webkit-scrollbar-thumb {
+      background-color: hsl(var(--p));
+      border-radius: 10px;
+      border: 2px solid hsl(var(--b3));
+    }
+    .scrollbar-thumb-primary::-webkit-scrollbar-thumb:hover {
+      background-color: hsl(var(--pf));
+    }
+
+    /* Improve scroll snapping */
+    .snap-x {
+      scroll-snap-type: x mandatory;
+    }
+    .snap-start {
+      scroll-snap-align: start;
+    }
+    .snap-end {
+      scroll-snap-align: end; /* For the spacer div */
+    }
+
+    /* Ensure cards don't get too tall if description is short */
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Allow body to grow */
+    }
+    .card-body p {
+      min-height: 3rem; /* Ensure minimum space for description */
+    }
+  </style>
+</section>

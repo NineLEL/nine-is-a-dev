@@ -1,0 +1,288 @@
+---
+// src/components/Contacts.astro
+
+// Define contact link structure
+interface ContactLink {
+  name: string;
+  url: string;
+  icon: string; // HTML string for the icon
+}
+
+const contactLinks: ContactLink[] = [
+  { 
+    name: "GitHub", 
+    url: "https://github.com/NineLEL", 
+    icon: 'icon-[mdi--github] w-7 h-7 md:w-8 md:h-8' 
+  },
+  {
+    name: "Discord",
+    url: "https://discord.com/users/584264698367705116",
+    icon: 'icon-[ic--twotone-discord] w-7 h-7 md:w-8 md:h-8',
+  },
+];
+---
+
+<section
+  id="contacts"
+  class="hero min-h-screen bg-base-200 pt-20 pb-12 md:py-24"
+>
+  <div
+    class="hero-content flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full max-w-6xl mx-auto px-4"
+  >
+    <div class="w-full lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 text-primary">
+        <span
+          class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+        >
+          Get In Touch
+        </span>
+      </h1>
+      <p class="mb-6 text-lg md:text-xl text-base-content/80">
+        Interested in collaborating or have a question? Feel free to send me a
+        message using the form.
+      </p>
+      <div
+        class="space-y-3 text-base-content text-left bg-base-100 p-4 rounded-md shadow-sm"
+      >
+        {/* Added subtle background */}
+        <p>I'll do my best to get back to you as soon as possible.</p>
+        <p>
+          Please note that I'm most active on Discord, so that's often the
+          quickest way to reach me for casual chats or faster responses.
+        </p>
+        {/* Optional: Add Discord link/button here later */}
+      </div>
+
+      {/* Contact Icons/Links */}
+      <div class="mt-6 text-center lg:text-left">
+        <h3 class="text-xl font-semibold mb-3 text-base-content/90">
+          Connect with me:
+        </h3>
+        <div class="flex justify-center lg:justify-start space-x-4">
+          {
+            contactLinks.map((link: ContactLink) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Connect via ${link.name}`}
+                class="text-base-content/70 hover:text-primary transition-colors duration-200 tooltip tooltip-bottom"
+                data-tip={link.name}
+              >
+                
+                <span class={link.icon} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    {/* Right Column: Form */}
+    <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
+      <form
+        id="contact-form"
+        class="w-full max-w-lg space-y-4 p-6 md:p-8 bg-base-100 rounded-lg shadow-lg"
+      >
+        {/* Enhanced shadow */}
+        <h2 class="text-2xl font-semibold mb-4 text-center text-secondary">
+          <span
+            class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            >Send a Message</span
+          >
+        </h2>
+        {/* Form Title */}
+        <div class="form-control">
+          <label class="label" for="name">
+            <span class="label-text"
+              >Name <span class="text-error">*</span></span
+            >
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your Name"
+            class="input input-bordered w-full"
+            required
+          />
+        </div>
+
+        <div class="form-control">
+          <label class="label" for="email">
+            <span class="label-text"
+              >Email <span class="text-error">*</span></span
+            >
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="your.email@example.com"
+            class="input input-bordered w-full"
+            required
+          />
+          <label class="label pt-1">
+            {/* Adjusted padding top */}
+            <span class="label-text-alt text-error hidden" id="email-error"
+              >Please enter a valid email address.</span
+            >
+          </label>
+        </div>
+
+        <div class="form-control">
+          <label class="label" for="message">
+            <span class="label-text"
+              >Message <span class="text-error">*</span></span
+            >
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            class="textarea textarea-bordered h-32 w-full"
+            placeholder="Your message..."
+            required></textarea>
+        </div>
+
+        <div class="form-control pt-4">
+          {/* Adjusted padding top */}
+          <button type="submit" class="btn btn-primary w-full"
+            >Send Message</button
+          >
+        </div>
+        <div id="form-status" class="mt-4 text-center"></div>
+      </form>
+    </div>
+  </div>
+
+  <script define:vars={{ webhookUrl: import.meta.env.DISCORD_WEBHOOK_URL }}>
+    const form = document.getElementById("contact-form");
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("email-error");
+    const formStatus = document.getElementById("form-status");
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Rate limiting (30 seconds)
+    const RATE_LIMIT_MS = 30 * 1000;
+    let lastSubmissionTime = 0;
+
+    function validateEmail() {
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.classList.remove("hidden");
+        emailInput.classList.add("input-error");
+        return false;
+      } else {
+        emailError.classList.add("hidden");
+        emailInput.classList.remove("input-error");
+        return true;
+      }
+    }
+
+    emailInput.addEventListener("input", validateEmail);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Ensure elements exist before proceeding
+      if (!form || !emailInput || !emailError || !formStatus || !submitButton) {
+        console.error("Form elements not found!");
+        if (formStatus) {
+          formStatus.textContent =
+            "An unexpected error occurred. Please refresh the page.";
+          formStatus.className = "mt-4 text-center text-error";
+        }
+        return;
+      }
+
+      if (!validateEmail()) {
+        formStatus.textContent = "Please fix the errors in the form.";
+        formStatus.className = "mt-4 text-center text-error";
+        return;
+      }
+
+      const formData = new FormData(form);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const message = formData.get("message");
+
+      // Disable button and show loading state
+      submitButton.disabled = true;
+      // Check rate limit
+      const now = Date.now();
+      if (now - lastSubmissionTime < RATE_LIMIT_MS) {
+        const timeLeft = Math.ceil(
+          (RATE_LIMIT_MS - (now - lastSubmissionTime)) / 1000
+        );
+        formStatus.textContent = `Please wait ${timeLeft} seconds before sending another message.`;
+        formStatus.className = "mt-4 text-center text-warning";
+        // Re-enable button immediately if rate limited
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message";
+        return;
+      }
+
+      submitButton.innerHTML =
+        '<span class="loading loading-spinner"></span> Sending...';
+      formStatus.textContent = "";
+      formStatus.className = "mt-4 text-center";
+
+      // Use embed payload
+      const discordPayload = {
+        // content: `New contact form submission from **${name}** (${email}):\n\n>>> ${message}`, // Keep content empty or add a ping if needed
+        embeds: [
+          {
+            title: "New Contact Form Submission",
+            color: 0x5865f2, // Discord blurple
+            fields: [
+              { name: "Name", value: name || "N/A", inline: true }, // Changed to inline
+              { name: "Email", value: email || "N/A", inline: true }, // Changed to inline
+              { name: "Message", value: `\`\`\`\n${message || "N/A"}\n\`\`\`` }, // Added code block formatting
+            ],
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(discordPayload),
+        });
+
+        if (response.ok) {
+          formStatus.textContent = "Message sent successfully! Thank you.";
+          formStatus.className = "mt-4 text-center text-success";
+          form.reset(); // Clear the form
+          lastSubmissionTime = Date.now(); // Update last submission time on success
+        } else {
+          // Try to get error message from Discord response
+          let errorMsg = `Failed to send message. Status: ${response.status}`;
+          try {
+            const errorData = await response.json();
+            errorMsg += ` - ${JSON.stringify(errorData)}`;
+          } catch (e) {
+            /* Ignore JSON parsing error */
+          }
+          console.error("Discord Webhook Error:", errorMsg);
+          formStatus.textContent =
+            "Failed to send message. Please try again later.";
+          formStatus.className = "mt-4 text-center text-error";
+        }
+      } catch (error) {
+        console.error("Error sending contact form:", error);
+        formStatus.textContent = "An error occurred. Please try again later.";
+        formStatus.className = "mt-4 text-center text-error";
+      } finally {
+        // Re-enable button
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message";
+      }
+    });
+  </script>
+</section>

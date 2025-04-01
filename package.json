@@ -1,5 +1,5 @@
 {
-  "name": "nine-is-a-dev",
+  "name": "nine.is-a.dev",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,22 +9,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^6.0.2",
     "@astrojs/vue": "^5.0.8",
-    "@fontsource/open-sauce-two": "^5.1.0",
-    "@fontsource/pridi": "^5.1.1",
+    "@tailwindcss/vite": "^4.0.17",
     "astro": "^5.5.5",
-    "astro-icon": "^1.1.5",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.17",
     "vue": "^3.5.13"
-  },
-  "devDependencies": {
-    "@iconify-json/mdi": "^1.2.2",
-    "daisyui": "^4.12.23"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "sharp"
     ]
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.322",
+    "@iconify/tailwind4": "^1.0.6",
+    "daisyui": "^5.0.9"
   }
 }
