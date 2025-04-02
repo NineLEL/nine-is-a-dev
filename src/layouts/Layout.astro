@@ -51,56 +51,49 @@ const siteName = "Nine's Personal Website";
     <slot name="head" />
 
     <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
+      (function () {
+        const getTheme = () => {
+          if (localStorage.getItem("theme")) {
+            return localStorage.getItem("theme");
+          }
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        };
+
+        const applyTheme = (theme) => {
+          document.documentElement.classList.toggle("dark", theme === "dark");
+          document.documentElement.dataset.theme = theme;
+
+          let themeColorMeta = document.querySelector(
+            "meta[name='theme-color']"
+          );
+          if (themeColorMeta) {
+            themeColorMeta.content = theme === "dark" ? "#1D232A" : "#FFFFFF";
+          } else {
+            themeColorMeta = document.createElement("meta");
+            themeColorMeta.name = "theme-color";
+            themeColorMeta.content = theme === "dark" ? "#1D232A" : "#FFFFFF";
+            document.head.appendChild(themeColorMeta);
+          }
+        };
+
+        const theme = getTheme();
+        applyTheme(theme);
+
+        const observer = new MutationObserver(() => {
+          applyTheme(document.documentElement.dataset.theme);
+        });
+
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["data-theme"],
+        });
+
+        document.addEventListener("visibilitychange", () => {
+          applyTheme(document.documentElement.dataset.theme);
+        });
       })();
-
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-        document.documentElement.dataset.theme = "dark";
-      } else {
-        document.documentElement.classList.remove("dark");
-        document.documentElement.dataset.theme = "light";
-      }
-      window.initialTheme = theme;
-
-      // Set initial theme-color meta tag
-      const themeColorMeta = document.getElementById("theme-color-meta");
-      if (themeColorMeta) {
-        themeColorMeta.content = theme === "dark" ? "#1D232A" : "#FFFFFF";
-      }
-
-      // Watch for theme changes and update meta tag
-      const observer = new MutationObserver(() => {
-        const currentTheme = document.documentElement.dataset.theme;
-        if (themeColorMeta && currentTheme) {
-          themeColorMeta.content =
-            currentTheme === "dark" ? "#1D232A" : "#FFFFFF";
-        }
-      });
-
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["data-theme"],
-      });
-
-      // Update on visibility change (tab switch)
-      document.addEventListener("visibilitychange", () => {
-        const currentTheme = document.documentElement.dataset.theme;
-        if (themeColorMeta && currentTheme) {
-          themeColorMeta.content =
-            currentTheme === "dark" ? "#1D232A" : "#FFFFFF";
-        }
-      });
     </script>
   </head>
   <body class="bg-base-100 text-base-content">
