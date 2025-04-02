@@ -15,9 +15,8 @@ const navLinks = [
   class="navbar fixed left-0 top-0 z-50 w-full bg-base-100/80 shadow-md border-b border-base-content/10 backdrop-blur-lg"
 >
   <div class="navbar-start">
-    <div class="dropdown">
-      <button
-        type="button"
+    <details class="dropdown">
+      <summary
         class="btn btn-ghost rounded-md lg:hidden transition hover:bg-base-content/10"
         aria-label="Open menu"
         id="mobile-menu-button"
@@ -38,7 +37,7 @@ const navLinks = [
             stroke-width="2"
             d="M4 6h16M4 12h8m-8 6h16"></path>
         </svg>
-      </button>
+      </summary>
 
       <ul
         tabindex="-1"
@@ -64,7 +63,7 @@ const navLinks = [
           ))
         }
       </ul>
-    </div>
+    </details>
 
     <a
       href="#home"

@@ -9,16 +9,15 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.startsWith('swiper-')
-        }
+          isCustomElement: (tag) => tag.startsWith("swiper-"),
+        },
       },
-      reactivityTransform: true
-    })
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ['vue']
-    }
-  }
+      include: ["vue"],
+    },
+  },
 });
