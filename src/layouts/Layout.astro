@@ -38,9 +38,8 @@ const siteName = "Nine's Personal Website";
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta name="generator" content={Astro.generator} />
-    
-    <meta name="theme-color" content="#2A303C" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+
+    <meta id="theme-color-meta" name="theme-color" content="#1D232A" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -73,6 +72,12 @@ const siteName = "Nine's Personal Website";
         document.documentElement.dataset.theme = "light";
       }
       window.initialTheme = theme;
+
+      // Set initial theme-color meta tag
+      const themeColorMeta = document.getElementById("theme-color-meta");
+      if (themeColorMeta) {
+        themeColorMeta.content = theme === "dark" ? "#2A303C" : "#FFFFFF";
+      }
     </script>
   </head>
   <body class="bg-base-100 text-base-content">

@@ -141,7 +141,7 @@ const navLinks = [
   // Mobile Menu & Scrollspy Logic
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
-  const mobileDropdown = mobileMenuButton?.closest('details.dropdown'); // Get the parent details element
+  const mobileDropdown = mobileMenuButton?.closest("details.dropdown"); // Get the parent details element
   const allNavLinks = document.querySelectorAll(".nav-link");
 
   // // --- Dynamic Menu Background Logic ---
@@ -178,7 +178,7 @@ const navLinks = [
           "visible",
           "pointer-events-auto"
         );
-        
+
         // Optional: Focus first item when opened for better keyboard nav
         // const firstLink = mobileMenu.querySelector('a');
         // if (firstLink) firstLink.focus();
@@ -208,12 +208,13 @@ const navLinks = [
     });
   }
 
-  if (mobileMenu && mobileDropdown) { // Ensure dropdown exists
+  if (mobileMenu && mobileDropdown) {
+    // Ensure dropdown exists
     // Close menu when clicking a link inside it
     mobileMenu.addEventListener("click", (event) => {
       if (event.target.tagName === "A" && event.target.closest(".nav-link")) {
         setMobileMenuOpen(false);
-        mobileDropdown.removeAttribute('open'); // Explicitly remove the open attribute
+        mobileDropdown.removeAttribute("open"); // Explicitly remove the open attribute
         // Optional: Return focus to button after selection
         // if (mobileMenuButton) mobileMenuButton.focus();
       }
@@ -238,8 +239,8 @@ const navLinks = [
     ) {
       setMobileMenuOpen(false);
       // Also ensure the details element closes if clicked outside
-      if (mobileDropdown?.hasAttribute('open')) {
-          mobileDropdown.removeAttribute('open');
+      if (mobileDropdown?.hasAttribute("open")) {
+        mobileDropdown.removeAttribute("open");
       }
     }
   });
@@ -331,6 +332,12 @@ const navLinks = [
       } else {
         htmlElement.classList.remove("dark");
         themeToggle.checked = true; // swap-off is sun (light)
+      }
+
+      // Update the theme-color meta tag
+      const themeColorMeta = document.getElementById("theme-color-meta");
+      if (themeColorMeta) {
+        themeColorMeta.content = theme === "dark" ? "#1D232A" : "#FFFFFF";
       }
     }
 
