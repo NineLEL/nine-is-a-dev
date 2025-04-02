@@ -1,5 +1,5 @@
 ---
-// src/components/HeroLanding.astro
+// src/components/Home.astro
 import Game from "../components/Vue/Game.vue"; // Import the Vue component
 
 // Props for customization (optional but recommended)
@@ -29,10 +29,10 @@ const typewriterWords = Array.isArray(title) ? title : [title];
   class="min-h-screen flex flex-col md:flex-row items-center gap-12 lg:gap-16 w-full max-w-6xl mx-auto px-4 py-16 md:py-24 relative"
 >
   <div
-    class="w-full md:w-1/2 text-center md:text-left order-1 md:order-1 mt-10"
+    class="w-full md:w-1/2 text-center md:text-left order-1 md:order-1 mt-10 md:pr-6 lg:pr-8"
   >
     <h1
-      class="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold !leading-tight mb-1"
+      class="text-4xl sm:text-5xl md:text-4xl lg:text-6xl font-bold !leading-tight mb-1"
     >
       Hello, I'm <span
         class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
@@ -40,7 +40,7 @@ const typewriterWords = Array.isArray(title) ? title : [title];
       >
     </h1>
     <h2
-      class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold !leading-tight mb-6 h-[1.5em] sm:h-[1.3em]"
+      class="text-3xl sm:text-4xl md:text-4xl lg:text-6xl font-bold !leading-tight mb-6 h-[1.5em] sm:h-[1.3em]"
     >
       I'm a <span
         class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
