@@ -78,6 +78,27 @@ const siteName = "Nine's Personal Website";
       if (themeColorMeta) {
         themeColorMeta.content = theme === "dark" ? "#2A303C" : "#FFFFFF";
       }
+
+      // Watch for theme changes and update meta tag
+      const observer = new MutationObserver(() => {
+        const currentTheme = document.documentElement.dataset.theme;
+        if (themeColorMeta && currentTheme) {
+          themeColorMeta.content = currentTheme === "dark" ? "#2A303C" : "#FFFFFF";
+        }
+      });
+
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+      });
+
+      // Update on visibility change (tab switch)
+      document.addEventListener('visibilitychange', () => {
+        const currentTheme = document.documentElement.dataset.theme;
+        if (themeColorMeta && currentTheme) {
+          themeColorMeta.content = currentTheme === "dark" ? "#2A303C" : "#FFFFFF";
+        }
+      });
     </script>
   </head>
   <body class="bg-base-100 text-base-content">
