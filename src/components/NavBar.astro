@@ -141,6 +141,7 @@ const navLinks = [
   // Mobile Menu & Scrollspy Logic
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
+  const mobileDropdown = mobileMenuButton?.closest('details.dropdown'); // Get the parent details element
   const allNavLinks = document.querySelectorAll(".nav-link");
 
   // // --- Dynamic Menu Background Logic ---
@@ -177,6 +178,7 @@ const navLinks = [
           "visible",
           "pointer-events-auto"
         );
+        
         // Optional: Focus first item when opened for better keyboard nav
         // const firstLink = mobileMenu.querySelector('a');
         // if (firstLink) firstLink.focus();
@@ -206,11 +208,12 @@ const navLinks = [
     });
   }
 
-  if (mobileMenu) {
+  if (mobileMenu && mobileDropdown) { // Ensure dropdown exists
     // Close menu when clicking a link inside it
     mobileMenu.addEventListener("click", (event) => {
       if (event.target.tagName === "A" && event.target.closest(".nav-link")) {
         setMobileMenuOpen(false);
+        mobileDropdown.removeAttribute('open'); // Explicitly remove the open attribute
         // Optional: Return focus to button after selection
         // if (mobileMenuButton) mobileMenuButton.focus();
       }
@@ -230,10 +233,14 @@ const navLinks = [
       isMobileMenuOpen &&
       mobileMenu &&
       mobileMenuButton &&
-      !mobileMenu.contains(event.target) &&
-      !mobileMenuButton.contains(event.target)
+      !mobileMenu.contains(event.target) && // Click wasn't inside the menu
+      !mobileMenuButton.contains(event.target) // Click wasn't on the button
     ) {
       setMobileMenuOpen(false);
+      // Also ensure the details element closes if clicked outside
+      if (mobileDropdown?.hasAttribute('open')) {
+          mobileDropdown.removeAttribute('open');
+      }
     }
   });
 

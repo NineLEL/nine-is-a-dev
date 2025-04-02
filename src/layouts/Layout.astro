@@ -38,6 +38,9 @@ const siteName = "Nine's Personal Website";
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta name="generator" content={Astro.generator} />
+    
+    <meta name="theme-color" content="#2A303C" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -72,7 +75,7 @@ const siteName = "Nine's Personal Website";
       window.initialTheme = theme;
     </script>
   </head>
-  <body>
+  <body class="bg-base-100 text-base-content">
     <NavBar />
     <main class="relative">
       <slot />
