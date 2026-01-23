@@ -1,100 +1,31 @@
----
-import "../styles/global.css";
-
-import Layout from "../layouts/Layout.astro";
-
-import Home from "../components/Home.astro";
-import About from "../components/About.astro";
-import Projects from "../components/Projects.astro";
-import Services from "../components/Services.astro";
-import Contacts from "../components/Contacts.astro";
-
-const pageTitle = "Nine | Personal Website";
-const pageDescription =
-  "Hi, I'm Nine. Welcome to my personal portfolio, built with Astro, where I showcase my projects, achievements, and passion for web development and gaming.";
----
-
-<Layout title={pageTitle} description={pageDescription}>
-  <Home />
-  <About />
-  <Projects />
-  <Services />
-  <Contacts />
-</Layout>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Select all direct child sections of the main content area if possible,
-    // or all sections with an ID as a fallback.
-    // Adjust the selector if your sections are nested differently.
-    const sections = document.querySelectorAll('main > section[id]'); // Assumes Layout.astro wraps content in <main>
-    // const sections = document.querySelectorAll('section[id]'); // More general selector if <main> isn't used
-
-    if (!sections.length) {
-      console.warn("Scroll-based URL update: No sections with IDs found.");
-      return;
-    }
-
-    const observerOptions = {
-      root: null, // observing intersections relative to the viewport
-      rootMargin: '-40% 0px -40% 0px', // Trigger when element is roughly in the middle 20% of viewport
-      threshold: 0 // Trigger as soon as any part enters the rootMargin area
-    };
-
-    let lastActiveSectionId = ''; // Keep track of the last updated hash
-
-    const observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id;
-          // Only update if the hash is different from the current one
-          if (sectionId && window.location.hash !== `#${sectionId}`) {
-             // Use replaceState to update the URL without adding to history
-             history.replaceState(null, '', `#${sectionId}`);
-             lastActiveSectionId = sectionId; // Update tracker
-             // Optional: Add active class to nav link if needed
-             // updateNavLinks(sectionId);
-          }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-      });
-
-      // Fallback logic might be needed for edge cases (fast scrolling up)
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-
-    // Optional: Function to highlight corresponding nav link
-    /*
-    function updateNavLinks(activeSectionId) {
-      document.querySelectorAll('nav a').forEach(link => {
-        if (link.getAttribute('href') === `#${activeSectionId}`) {
-          link.classList.add('active-nav-link'); // Add your active class
-        } else {
-          link.classList.remove('active-nav-link');
+        p {
+            font-size: 1.2em;
         }
-      });
-    }
-    */
-
-    // Optional: Initial check on page load
-    /*
-    setTimeout(() => {
-       const hash = window.location.hash.substring(1);
-       if (hash) {
-          const initialSection = document.getElementById(hash);
-          // Check if section is actually in view before highlighting
-          // if (initialSection && isElementInViewport(initialSection)) {
-          //    updateNavLinks(hash);
-          // }
-       } else if (sections.length > 0) {
-          // Potentially set the first section as active if no hash
-          // updateNavLinks(sections[0].id);
-       }
-    }, 100);
-    */
-  });
-</script>
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <p>Redirecting to <a href="https://notnine.xyz">notnine.xyz</a>...</p>
+    <script>
+        window.location.href = "https://notnine.xyz";
+    </script>
+</body>
+</html>
